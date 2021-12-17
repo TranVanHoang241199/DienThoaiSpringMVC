@@ -1,3 +1,6 @@
+<%@page import="org.o7planning.hellospringmvc.bean.KhachhangBean"%>
+<%@page import="org.o7planning.hellospringmvc.bean.LoaiBean"%>
+<%@page import="java.util.ArrayList"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -22,7 +25,6 @@
 	background: #aaa;
 }
 </style>
-
 </head>
 <body>
 	<div class="container" style="margin-top: 30px">
@@ -55,10 +57,20 @@
 					</a>
 				</div>
 				<br>
-				<c:forEach items="${dsMau}" var="h">
-					<button type="button" class=<c:url value='"${h}"'/>>Primm</button>
+
+				<%
+					ArrayList<LoaiBean> dsLoai = (ArrayList<LoaiBean>) request.getAttribute("dsLoai");
+				int i = 0;
+				%>
+				<c:forEach items="${dsMau }" var="h">
+					<button type="button" name="nut1" class=<c:url value='"${h }"'/>>
+						<%-- <%=dsLoai.get(1).getTenLoai()%> --%>
+					</button>
+					<%
+						i++;
+					%>
 				</c:forEach>
-<!-- 				<button type="button" class=<c:url value='"btn btn-primary"'/>>Primary</button>
+				<!-- 				<button type="button" class=<c:url value='"btn btn-primary"'/>>Primary</button>
 				<button type="button" class="btn btn-secondary">Secondary</button>
 				<button type="button" class="btn btn-success">Success</button>
 				<button type="button" class="btn btn-black">Primary</button>
@@ -74,6 +86,8 @@
 		</div>
 	</div>
 
+
+
 	<div class="container" style="margin-top: 30px">
 		<div class="row">
 			<h3>Điện Thoại</h3>
@@ -88,7 +102,11 @@
 						<div class="card-body">
 							<h4 class="card-title">${i.getTenDT() }</h4>
 							<p class="card-text">$ ${i.getGia() }</p>
-							<a href="#" class="btn btn-primary">See Profile</a>
+							<form method="post"
+								action="Menu?ms=${i.getMaDT()}&&ts=${i.getTenDT()}&&ml=${i.getMaLoai()}&&ah=${i.getAnh()}&&gia=${i.getGia()}">
+								<button type="submit" class="btn btn-info">Mua</button>
+							</form>
+
 						</div>
 					</div>
 				</div>

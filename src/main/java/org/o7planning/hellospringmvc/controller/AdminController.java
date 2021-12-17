@@ -9,9 +9,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.o7planning.hellospringmvc.bean.DienThoaiBean;
+import org.o7planning.hellospringmvc.bean.KhachhangBean;
+import org.o7planning.hellospringmvc.bean.LichSuMuaHangBean;
 import org.o7planning.hellospringmvc.bean.LoaiBean;
 import org.o7planning.hellospringmvc.bo.AdminBo;
 import org.o7planning.hellospringmvc.bo.DienThoaiBo;
+import org.o7planning.hellospringmvc.bo.KhachHangBo;
+import org.o7planning.hellospringmvc.bo.LichSuMuaHangBo;
 import org.o7planning.hellospringmvc.bo.LoaiBo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -175,6 +179,60 @@ public class AdminController {
 			return new ModelAndView("helloworld");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+
+	@RequestMapping("/TTKhachHang")
+	public ModelAndView TTKhachHang(Model model, HttpServletResponse response, HttpServletRequest request,
+			HttpSession session) {
+		try {
+			String path = "admin/ttkhachhang_admin";
+
+			KhachHangBo khBo = new KhachHangBo();
+			ArrayList<KhachhangBean> dsKH = khBo.getKhachHang();
+
+			String xoaKH = request.getParameter("xoaKH");
+			String timkiem = request.getParameter("timkey");
+
+			if (xoaKH != null) {
+				khBo.xoaKhachHang(xoaKH);
+				session.setAttribute("tbKH", "Xóa Thành Công");
+				dsKH = khBo.getKhachHang();
+			} else
+				session.setAttribute("tbKH", "Thao tác tất Bại");
+
+			if (timkiem != null)
+				dsKH = khBo.timKhachHang(timkiem);
+
+			session.setAttribute("dsKH", dsKH);
+			return new ModelAndView(path);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+
+	@RequestMapping("/lichSuAdmin")
+	public ModelAndView lichSuAdmin(Model model, HttpServletResponse response, HttpServletRequest request,
+			HttpSession session) {
+		try {
+			String path = "admin/lichsu_admin";
+
+			LichSuMuaHangBo lsBo = new LichSuMuaHangBo();
+
+			ArrayList<LichSuMuaHangBean> dsLS = lsBo.getLSMH();
+
+			String timkey = request.getParameter("timkey");
+			if (timkey != null)
+				dsLS = lsBo.timkiemMa(Long.parseLong(timkey));
+				
+			session.setAttribute("dsLS", dsLS);
+			return new ModelAndView(path);
+		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}

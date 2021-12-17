@@ -28,16 +28,12 @@
 					class="nav-link dropdown-toggle" href="#" role="button"
 					data-bs-toggle="dropdown">Khách hàng</a>
 					<ul class="dropdown-menu">
-						<li><a class="dropdown-item" href="#">Thêm Tài Khoản Khách
+						<li><a class="dropdown-item" href="DangKy">Đăng Ký Tài Khoản Khách
 								Hàng</a></li>
-						<li><a class="dropdown-item" href="#">Tài Khoản Khách
-								Hàng</a></li>
-						<li><a class="dropdown-item" href="#">kiểm tra lịch sử
+						<li><a class="dropdown-item" href="lichSuAdmin">kiểm tra lịch sử
 								mua hàng</a></li>
-						<li><a class="dropdown-item" href="#">thông tin khách
+						<li><a class="dropdown-item" href="TTKhachHang">Tim Kiếm khách
 								hàng</a></li>
-						<li><a class="dropdown-item" href="#">chỉnh sửa thông tin
-								khách hàng</a></li>
 					</ul></li>
 				<li class="nav-item dropdown"><a
 					class="nav-link dropdown-toggle" href="#" role="button"

@@ -1,7 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@include file="navbar_user.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,36 +28,53 @@
 		</button>
 		<div class="collapse navbar-collapse" id="collapsibleNavbar">
 			<ul class="navbar-nav">
-				<li class="nav-item"><a class="nav-link" href="#">Trang Chủ</a></li>
-				<li class="nav-item"><a class="nav-link" href="GioHang">Giỏi
+				<li class="nav-item"><a class="nav-link" href="Menu">Trang
+						Chủ</a></li>
+				<li class="nav-item"><a class="nav-link" href="GioHang">Giỏ
 						Hàng</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">Đặt Mua</a></li>
+				<li class="nav-item"><a class="nav-link" href="DatMua">Thanh Toán</a></li>
 				<li class="nav-item dropdown"><a
 					class="nav-link dropdown-toggle" href="#" role="button"
 					data-bs-toggle="dropdown">Hãng</a>
 					<ul class="dropdown-menu">
 						<c:forEach items="${dsLoai}" var="h">
-							<li><a class="dropdown-item" href="#">${h.getTenLoai() }</a></li>
+							<li><a class="dropdown-item"
+								href="Menu?timl=${h.getMaLoai()}">${h.getTenLoai() }</a></li>
 						</c:forEach>
 					</ul></li>
-				<li class="nav-item dropdown"><a
-					class="nav-link dropdown-toggle" href="#" role="button"
-					data-bs-toggle="dropdown">Tài Khoản</a>
-					<ul class="dropdown-menu">
-						<li><a class="dropdown-item" href="DangNhapAdmin">Đăng
-								nhập admin</a></li>
-						<li><a class="dropdown-item" href="#">Đăng ký tài khoản
-								người dùng</a></li>
-						<li><a class="dropdown-item" href="#">Đăng nhập người
-								dùng</a></li>
-						<li><a class="dropdown-item" href="#">Lịch sử mua hàng</a></li>
-						<li><a class="dropdown-item" href="#">Đăng Xuất</a></li>
-					</ul></li>
+				<c:choose>
+					<c:when test="${tbdnkh!=null}">
+						<li class="nav-item dropdown"><a
+							class="nav-link dropdown-toggle" href="#" role="button"
+							data-bs-toggle="dropdown">${tbdnkh}</a>
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item" href="#">Thông tin khách
+										hàng</a></li>
+								<li><a class="dropdown-item" href="LichSuMuaHang">Lịch sử mua hàng</a></li>
+								<li><a class="dropdown-item" href="Menu?dx=0">Đăng Xuất</a></li>
+							</ul></li>
+					</c:when>
+					<c:otherwise>
+						<li class="nav-item dropdown"><a
+							class="nav-link dropdown-toggle" href="#" role="button"
+							data-bs-toggle="dropdown">Tài Khoản</a>
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item" href="DangNhapAdmin">Đăng
+										nhập admin</a></li>
+								<li><a class="dropdown-item" href="DangNhap">Đăng nhập
+										người dùng</a></li>
+								<li><a class="dropdown-item" href="DangKy">Đăng ký tài
+										khoản người dùng</a></li>
+							</ul></li>
+					</c:otherwise>
+				</c:choose>
+
 			</ul>
 		</div>
 
-		<form class="d-flex">
-			<input class="form-control me-2" type="text" placeholder="Search">
+		<form class="d-flex" action="Menu">
+			<input class="form-control me-2" type="text" placeholder="Search"
+				name="timuser">
 			<button class="btn btn-primary" type="button">Search</button>
 		</form>
 	</nav>
