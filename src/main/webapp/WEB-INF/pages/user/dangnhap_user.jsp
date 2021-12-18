@@ -111,8 +111,15 @@ body#LoginForm {
 </style>
 </head>
 <body>
-	<div class="container">
+	<c:choose>
+		<c:when test="${tbdnkh2!=null }">
+			<script>
+				alert("đăng nhập sai");
+			</script>
+		</c:when>
+	</c:choose>
 
+	<div class="container">
 		<div class="login-form">
 			<div class="main-div">
 				<div class="panel">
@@ -120,9 +127,10 @@ body#LoginForm {
 						Đăng Nhập
 						<h5>khách hàng</h5>
 					</h1>
-					<p>Please enter your email and password</p>
+					<p>Please enter your email and password, or <a href="Menu">Home</a>
+						</p>
 				</div>
-				<form method="post" action="DangNhap" >
+				<form method="post" action="DangNhap">
 					<div class="form-group">
 						<input type="text" class="form-control" name="namekhachhang"
 							placeholder="Tài Khoản">
@@ -135,7 +143,6 @@ body#LoginForm {
 						<a href="reset.html">Forgot password?</a>
 					</div>
 					<button type="submit" class="btn btn-primary">Đăng Nhập</button>
-
 				</form>
 			</div>
 			<p class="botto-text">Designed by Sunil Rajput</p>

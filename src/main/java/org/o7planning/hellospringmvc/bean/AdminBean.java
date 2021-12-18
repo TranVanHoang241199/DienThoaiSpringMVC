@@ -3,13 +3,14 @@ package org.o7planning.hellospringmvc.bean;
 public class AdminBean {
 	private String tenDN;
 	private String matKhau;
-	private String quyen;
+	private boolean quyen;
 
 	public AdminBean() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
 
-	public AdminBean(String tenDN, String matKhau, String quyen) {
+	public AdminBean(String tenDN, String matKhau, boolean quyen) {
 		super();
 		this.tenDN = tenDN;
 		this.matKhau = matKhau;
@@ -32,11 +33,11 @@ public class AdminBean {
 		this.matKhau = matKhau;
 	}
 
-	public String getQuyen() {
+	public boolean isQuyen() {
 		return quyen;
 	}
 
-	public void setQuyen(String quyen) {
+	public void setQuyen(boolean quyen) {
 		this.quyen = quyen;
 	}
 

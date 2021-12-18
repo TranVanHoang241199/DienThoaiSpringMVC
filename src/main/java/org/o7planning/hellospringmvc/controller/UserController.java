@@ -143,9 +143,11 @@ public class UserController {
 
 			if (tenDN != null && pass != null) {
 				if (khBo.dangNhap(tenDN, pass)) {
+					session.removeAttribute("tbdnkh2");
 					session.setAttribute("tbdnkh", tenDN);
 					response.sendRedirect("Menu");
-				}
+				} else
+					session.setAttribute("tbdnkh2", "đăng nhập sai.");
 			}
 
 			return new ModelAndView(path);
@@ -168,15 +170,16 @@ public class UserController {
 			String tk = request.getParameter("tk_user");
 			String pass1 = request.getParameter("pass_user1");
 			String pass2 = request.getParameter("pass_user2");
-
-			if (name != null && dc != null && sdt != null && email != null && tk != null && pass1 != null
+			
+			System.out.println(name);
+			if (name!= null && dc != null && sdt != null && email != null && tk != null && pass1 != null
 					&& pass2 != null) {
 				if (pass1.equals(pass2)) {
 					boolean isValid = new KhachHangBo().checkTaiKhoan(tk);
 					if (!isValid) {
 						boolean dk_tc = new KhachHangBo().dangKy(new KhachhangBean(name, dc, sdt, email, tk, pass1));
 						if (dk_tc) {
-							session.setAttribute("tb_Register_User", "Đăng ký thành công");
+							session.removeAttribute("tb_Register_User");
 							response.sendRedirect("DangNhap");
 						} else
 							session.setAttribute("tb_Register_User", "Đăng ký thất bại");
@@ -190,7 +193,9 @@ public class UserController {
 			}
 
 			return new ModelAndView(path);
-		} catch (Exception e) {
+		} catch (
+
+		Exception e) {
 			e.printStackTrace();
 			return null;
 		}
@@ -288,7 +293,6 @@ public class UserController {
 			String path = "user/ttkhachhang_user";
 
 			KhachHangBo khBo = new KhachHangBo();
-			
 
 			String maKH = request.getParameter("kh_ma");
 			String tenKH = request.getParameter("kh_ten");
@@ -296,7 +300,7 @@ public class UserController {
 			String sdt = request.getParameter("kh_dc");
 			String email = request.getParameter("kh_email");
 			String tenDN = request.getParameter("kh_tdn");
-			
+
 			KhachhangBean khBean = null;
 
 			if (maKH != null || tenKH != null || diaChi != null || sdt != null || tenDN != null) {
@@ -304,12 +308,12 @@ public class UserController {
 				session.setAttribute("tBTDKH", "Cập Nhật thông tin thành công");
 			} else
 				session.setAttribute("tBTDKH", "Cập Nhật thông tin thành công");
-			
+
 			if (session.getAttribute("tbdnkh") != null) {
 				String taiKhoan = (String) session.getAttribute("tbdnkh");
 				khBean = khBo.checkTKTT(taiKhoan);
 			}
-			
+
 			session.setAttribute("khBean", khBean);
 			return new ModelAndView(path);
 		} catch (Exception e) {

@@ -36,14 +36,14 @@ public class AdminController {
 			String pass = request.getParameter("password_admin");
 
 			if (session.getAttribute("adminUser") != null)
-				session.invalidate();
-
-			if (aBo.DangNhap(user, pass)) {
-				session.setAttribute("adminUser", user);
-				response.sendRedirect("MenuAdmin");
-			}else {
-				session.setAttribute("tbdn", "đăng nhập thất bại.");
-			}
+				session.removeAttribute("adminUser");
+			if (user != null)
+				if (aBo.dangNhap(user, pass)) {
+					session.setAttribute("adminUser", user);
+					response.sendRedirect("MenuAdmin");
+				} else {
+					session.setAttribute("adminUser", "đăng nhập thất bại.");
+				}
 
 			return new ModelAndView(path);
 		} catch (Exception e) {

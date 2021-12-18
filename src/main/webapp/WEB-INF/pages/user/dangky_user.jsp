@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -90,6 +91,15 @@ input, input::-webkit-input-placeholder {
 	rel='stylesheet' type='text/css'>
 </head>
 <body>
+
+	<c:choose>
+		<c:when test="${tb_Register_User!=null }">
+			<script>
+				alert("Nhập đầy đủ thông tin đăng ký.");
+			</script>
+		</c:when>
+	</c:choose>
+
 	<div class="container">
 		<div class="row main">
 			<div class="panel-heading">
@@ -108,7 +118,7 @@ input, input::-webkit-input-placeholder {
 							<div class="input-group">
 								<span class="input-group-addon"><i class="fa fa-user fa"
 									aria-hidden="true"></i></span> <input type="text" class="form-control"
-									name="name_user" id="name" placeholder="Enter họ và tên" />
+									name="name_user" placeholder="Enter họ và tên" />
 							</div>
 						</div>
 					</div>
@@ -119,7 +129,8 @@ input, input::-webkit-input-placeholder {
 							<div class="input-group">
 								<span class="input-group-addon"><i class="fa fa-user fa"
 									aria-hidden="true"></i></span> <input type="text" class="form-control"
-									name="dc_user" id="name" placeholder="Enter Địa chỉ" />
+									
+									name="dc_user" placeholder="Enter Địa chỉ" />
 							</div>
 						</div>
 					</div>
@@ -131,7 +142,7 @@ input, input::-webkit-input-placeholder {
 							<div class="input-group">
 								<span class="input-group-addon"><i class="fa fa-user fa"
 									aria-hidden="true"></i></span> <input type="text" class="form-control"
-									name="sdt_user" id="name" placeholder="Enter số điện thoại" />
+									name="sdt_user" placeholder="Enter số điện thoại" />
 							</div>
 						</div>
 					</div>
@@ -143,7 +154,7 @@ input, input::-webkit-input-placeholder {
 							<div class="input-group">
 								<span class="input-group-addon"><i
 									class="fa fa-envelope fa" aria-hidden="true"></i></span> <input
-									type="text" class="form-control" name="email_user" id="email"
+									type="email" class="form-control" name="email_user"
 									placeholder="Enter your Email" />
 							</div>
 						</div>
@@ -156,7 +167,7 @@ input, input::-webkit-input-placeholder {
 							<div class="input-group">
 								<span class="input-group-addon"><i class="fa fa-users fa"
 									aria-hidden="true"></i></span> <input type="text" class="form-control"
-									name="tk_user" id="username" placeholder="Enter Tài Khoản" />
+									name="tk_user" placeholder="Enter Tài Khoản" />
 							</div>
 						</div>
 					</div>
@@ -168,7 +179,7 @@ input, input::-webkit-input-placeholder {
 								<span class="input-group-addon"><i
 									class="fa fa-lock fa-lg" aria-hidden="true"></i></span> <input
 									type="password" class="form-control" name="pass_user1"
-									id="password" placeholder="Enter your Password" />
+									 placeholder="Enter your Password" />
 							</div>
 						</div>
 					</div>
@@ -181,7 +192,7 @@ input, input::-webkit-input-placeholder {
 								<span class="input-group-addon"><i
 									class="fa fa-lock fa-lg" aria-hidden="true"></i></span> <input
 									type="password" class="form-control" name="pass_user2"
-									id="confirm" placeholder="Enter your Password" />
+									 placeholder="Enter your Password" />
 							</div>
 						</div>
 					</div>
@@ -192,7 +203,10 @@ input, input::-webkit-input-placeholder {
 							ký</button>
 					</div>
 					<div class="login-register">
-						<a href="Login_User">Login</a>
+						<div class="row">
+							<a href="DangNhap">Login</a> -0- <a href="Menu">Home</a>
+						</div>
+
 					</div>
 				</form>
 			</div>
