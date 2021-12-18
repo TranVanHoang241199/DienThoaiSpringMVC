@@ -46,4 +46,9 @@ public class KhachHangBo {
 	public KhachhangBean checkTKTT(String taiKhoan) throws Exception {
 		return khDao.checkTKTT(taiKhoan);
 	}
+	
+	public boolean themKH(long maKH, String tenKH, String diaChi, String sdt, String email, String tenDN)
+			throws Exception {
+		return khDao.themKH(maKH, tenKH, diaChi, sdt, email, tenDN);
+	}
 }

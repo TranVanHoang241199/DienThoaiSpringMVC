@@ -109,4 +109,29 @@ public class KhachHangDao {
 		dc.cn.close();
 		return kh;
 	}
+
+	public boolean themKH(long maKH, String tenKH, String diaChi, String sdt, String email, String tenDN)
+			throws Exception {
+		boolean kt = false;
+		// B1: Kết nối
+		KN_SQL dc = new KN_SQL();
+		dc.ketNoi();
+
+		// B2: lấy dữ liệu
+		String sql = "UPDATE dbo.KhachHang SET TenKH=?, DiaChi=?, SDT=?, Email=?, TenDN=? WHERE MaKH=?";
+		PreparedStatement cmd = dc.cn.prepareStatement(sql);
+		
+		cmd.setString(1, tenKH);
+		cmd.setString(2, diaChi);
+		cmd.setString(3, sdt);
+		cmd.setString(4, email);
+		cmd.setString(5, tenDN);
+		cmd.setLong(6, maKH);
+
+		if (cmd.executeUpdate() != 0) {
+			kt = true;
+		}
+		dc.cn.close();
+		return kt;
+	}
 }

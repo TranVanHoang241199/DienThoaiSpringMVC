@@ -286,8 +286,31 @@ public class UserController {
 			HttpSession session) {
 		try {
 			String path = "user/ttkhachhang_user";
+
+			KhachHangBo khBo = new KhachHangBo();
 			
+
+			String maKH = request.getParameter("kh_ma");
+			String tenKH = request.getParameter("kh_ten");
+			String diaChi = request.getParameter("kh_sdt");
+			String sdt = request.getParameter("kh_dc");
+			String email = request.getParameter("kh_email");
+			String tenDN = request.getParameter("kh_tdn");
 			
+			KhachhangBean khBean = null;
+
+			if (maKH != null || tenKH != null || diaChi != null || sdt != null || tenDN != null) {
+				khBo.themKH(Long.parseLong(maKH), tenKH, diaChi, sdt, email, tenDN);
+				session.setAttribute("tBTDKH", "Cập Nhật thông tin thành công");
+			} else
+				session.setAttribute("tBTDKH", "Cập Nhật thông tin thành công");
+			
+			if (session.getAttribute("tbdnkh") != null) {
+				String taiKhoan = (String) session.getAttribute("tbdnkh");
+				khBean = khBo.checkTKTT(taiKhoan);
+			}
+			
+			session.setAttribute("khBean", khBean);
 			return new ModelAndView(path);
 		} catch (Exception e) {
 			e.printStackTrace();

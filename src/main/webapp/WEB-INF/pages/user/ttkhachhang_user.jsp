@@ -34,40 +34,40 @@
 			cảm ơn quý khách.
 		</p>
 		<hr>
-		<form action="" method="post">
+		<form action="ThongTinKH" method="post">
 			<div class="row">
 				<div class="col-md-12">
-					<input type="text" class="form-control" name="kh_ten" id="kh_ten"
+					<input type="text" class="form-control" name="kh_ma" id="kh_ma"
 						value="${khBean.getMaKH() }" placeholder="${khBean.getMaKH()} ">
 				</div>
 				
 				<div class="col-md-12">
 					<p class="bg-success text-white">Mã Khách Hàng</p>
-					<input type="text" class="form-control" name="kh_diachi"
+					<input type="text" class="form-control" name="kh_ten"
 						id="kh_diachi" value="${khBean.getTenKH() }"
 						placeholder="${khBean.getTenKH() }">
 				</div>
 				<div class="col-md-12">
 					<p class="bg-info text-white">Tên khách Hàng</p>
-					<input type="text" class="form-control" name="kh_dienthoai"
+					<input type="text" class="form-control" name="kh_sdt"
 						value="${khBean.getSdt() }" vid="kh_dc"
 						placeholder="${khBean.getSdt() }">
 				</div>
 				<div class="col-md-12">
 					<p class="bg-warning text-white">Số Điện Thoại</p>
-					<input type="text" class="form-control" name="kh_dienthoai"
-						value="${khBean.getSdt() }" vid="kh_dc"
-						placeholder="${khBean.getSdt() }">
+					<input type="text" class="form-control" name="kh_dc"
+						value="${khBean.getDiaChi() }" vid="kh_dc"
+						placeholder="${khBean.getDiaChi() }">
 				</div>
 				<div class="col-md-12">
 					<p class="bg-danger text-white">Địa Chỉ</p>
 					<input type="email" class="form-control" name="kh_email"
-						id="kh_email" value="${khBean.getDiaChi() }"
-						placeholder="${khBean.getDiaChi() }">
+						id="kh_email" value="${khBean.getEmail() }"
+						placeholder="${khBean.getEmail() }">
 				</div>
 				<div class="col-md-12">
 					<p class="bg-secondary text-white">Email</p>
-					<input type="text" class="form-control" name="kh_cmnd" id="kh_cmnd"
+					<input type="text" class="form-control" name="kh_tdn" id="kh_cmnd"
 						value="${khBean.getTenDN() }" placeholder="${khBean.getTenDN() }">
 				</div>
 				<div class="col-md-12">
