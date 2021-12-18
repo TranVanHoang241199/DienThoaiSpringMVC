@@ -142,9 +142,10 @@ public class UserController {
 			String pass = request.getParameter("paskhachhang");
 
 			if (tenDN != null && pass != null) {
-				khBo.dangNhap(tenDN, pass);
-				session.setAttribute("tbdnkh", tenDN);
-				path = "user/menu_user";
+				if (khBo.dangNhap(tenDN, pass)) {
+					session.setAttribute("tbdnkh", tenDN);
+					response.sendRedirect("Menu");
+				}
 			}
 
 			return new ModelAndView(path);
@@ -203,7 +204,7 @@ public class UserController {
 
 			KhachHangBo khBo = new KhachHangBo();
 			LichSuMuaHangBo lsBo = new LichSuMuaHangBo();
-			GioHangBo gh = (GioHangBo)session.getAttribute("gh");
+			GioHangBo gh = (GioHangBo) session.getAttribute("gh");
 
 			String hvt = request.getParameter("kh_ten");
 			String dc = request.getParameter("kh_diachi");
@@ -218,11 +219,11 @@ public class UserController {
 				String taiKhoan = (String) session.getAttribute("tbdnkh");
 				khBean = khBo.checkTKTT(taiKhoan);
 			}
-			
-			if (hvt!=null && dc!=null && sdt!=null) {
-				lsBo.themLSMH(hvt, tendn,email ,gh.tongTien(), gh.tongSachHC(), "Đã Thanh Toán", "");
+
+			if (hvt != null && dc != null && sdt != null) {
+				lsBo.themLSMH(hvt, tendn, email, gh.tongTien(), gh.tongSachHC(), "Đã Thanh Toán", "");
 				session.removeAttribute("gh");
-			} 
+			}
 
 			session.setAttribute("khBean", khBean);
 			return new ModelAndView(path);
@@ -237,23 +238,56 @@ public class UserController {
 			HttpSession session) {
 		try {
 			String path = "user/lichsumuahang_user";
-			 
+
 			String key = request.getParameter("timkey");
-			
+
 			LichSuMuaHangBo lsBo = new LichSuMuaHangBo();
-			
+
 			ArrayList<LichSuMuaHangBean> dsLS = null;
-			
-			if(session.getAttribute("tbdnkh")!=null) {
-				String tk = (String)session.getAttribute("tbdnkh");
-				
-				if(key!=null)
+
+			if (session.getAttribute("tbdnkh") != null) {
+				String tk = (String) session.getAttribute("tbdnkh");
+
+				if (key != null)
 					dsLS = lsBo.timkiemls(Long.parseLong(key), tk);
 				else
 					dsLS = lsBo.timLSMH(tk);
 			}
-			
+
 			session.setAttribute("dsLS", dsLS);
+			return new ModelAndView(path);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@RequestMapping("/ChiTietLichSuMuaHang")
+	public ModelAndView xemChiTietLSMH(Model model, HttpServletResponse response, HttpServletRequest request,
+			HttpSession session) {
+		try {
+			String path = "user/ctls_user";
+
+			LichSuMuaHangBo lsBo = new LichSuMuaHangBo();
+
+			String ma = request.getParameter("ctls");
+			LichSuMuaHangBean lsBean = lsBo.getChiTietLS(Long.parseLong(ma));
+
+			session.setAttribute("ctLS", lsBean);
+			return new ModelAndView(path);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@RequestMapping("/ThongTinKH")
+	public ModelAndView TTKhachHang(Model model, HttpServletResponse response, HttpServletRequest request,
+			HttpSession session) {
+		try {
+			String path = "user/ttkhachhang_user";
+			
+			
 			return new ModelAndView(path);
 		} catch (Exception e) {
 			e.printStackTrace();

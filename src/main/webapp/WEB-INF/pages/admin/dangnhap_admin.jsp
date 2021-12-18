@@ -65,8 +65,7 @@ body {
 </head>
 
 <body>
-
-
+	
 	<main class="login-form">
 		<div class="cotainer">
 			<div class="row justify-content-center">
@@ -113,7 +112,6 @@ body {
 					</div>
 				</div>
 			</div>
-		</div>
 		</div>
 
 	</main>

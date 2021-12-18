@@ -98,7 +98,7 @@ span.input-group-addon i {
 											<strong>${h.getTenKH()}</strong> ---- $: ${h.getGia()}
 											----${h.getNgayMua() }
 										</div></td>
-									<td><form class="" method="post" action="#">
+									<td><form class="" method="post" action="ChiTietLichSuMuaHang?ctls=${h.getMaLSMH() }">
 											<button type="submit" class="btn btn-danger">xem chi
 												tiết</button>
 										</form></td>

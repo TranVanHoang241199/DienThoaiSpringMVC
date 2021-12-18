@@ -39,7 +39,7 @@
 					class="nav-link dropdown-toggle" href="#" role="button"
 					data-bs-toggle="dropdown">Tài Khoản</a>
 					<ul class="dropdown-menu">
-						<li><a class="dropdown-item" href="#">Lịch sử Chỉnh sửa</a></li>
+						
 						<li><a class="dropdown-item" href="dangXuatadmin">Đăng Xuất</a></li>
 					</ul></li>
 			</ul>

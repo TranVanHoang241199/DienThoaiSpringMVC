@@ -28,4 +28,8 @@ public class LichSuMuaHangBo {
 	public ArrayList<LichSuMuaHangBean> timkiemMa(long maLS) throws Exception {
 		return lsDao.timkiemMa(maLS);
 	}
+	
+	public LichSuMuaHangBean getChiTietLS(long ma) throws Exception {
+		return lsDao.getChiTietLS(ma);
+	}
 }

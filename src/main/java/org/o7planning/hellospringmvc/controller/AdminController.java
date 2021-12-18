@@ -41,6 +41,8 @@ public class AdminController {
 			if (aBo.DangNhap(user, pass)) {
 				session.setAttribute("adminUser", user);
 				response.sendRedirect("MenuAdmin");
+			}else {
+				session.setAttribute("tbdn", "đăng nhập thất bại.");
 			}
 
 			return new ModelAndView(path);
@@ -161,7 +163,7 @@ public class AdminController {
 			session.setAttribute("dsDT", dsDT);
 			String path = "admin/dthoai_admin";
 			if (!dsDT.isEmpty())
-				session.setAttribute("tbDT", "Tìm thấy " + dsDT.size() + "kết quả");
+				session.setAttribute("tbDT", "Tìm thấy " + dsDT.size() + " kết quả");
 			else
 				session.setAttribute("tbDT", "không có sản phẩm nào.");
 			return new ModelAndView(path);
@@ -229,7 +231,7 @@ public class AdminController {
 			String timkey = request.getParameter("timkey");
 			if (timkey != null)
 				dsLS = lsBo.timkiemMa(Long.parseLong(timkey));
-				
+
 			session.setAttribute("dsLS", dsLS);
 			return new ModelAndView(path);
 		} catch (Exception e) {

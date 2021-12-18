@@ -108,7 +108,7 @@ public class LichSuMuaHangDao {
 		dc.cn.close();
 		return ds;
 	}
-	
+
 	public ArrayList<LichSuMuaHangBean> timkiemMa(long maLS) throws Exception {
 		ArrayList<LichSuMuaHangBean> ds = new ArrayList<LichSuMuaHangBean>();
 		KN_SQL dc = new KN_SQL();
@@ -129,6 +129,31 @@ public class LichSuMuaHangDao {
 			String trangThai = rs.getString("TrangThai");
 			String ghiChu = rs.getString("GhiChu");
 			ds.add(new LichSuMuaHangBean(maLSMH, tenKH, tenDN, email, gia, ngayMua, soLuong, trangThai, ghiChu));
+		}
+		dc.cn.close();
+		return ds;
+	}
+
+	public LichSuMuaHangBean getChiTietLS(long ma) throws Exception {
+		LichSuMuaHangBean ds = null;
+		KN_SQL dc = new KN_SQL();
+		dc.ketNoi();
+
+		String sql = "SELECT * FROM dbo.LichSuMuaHang WHERE MaLSMH = ?";
+		PreparedStatement cmd = dc.cn.prepareStatement(sql);
+		cmd.setLong(1, ma);
+		ResultSet rs = cmd.executeQuery();
+		while (rs.next()) {
+			long maLSMH = rs.getLong("MaLSMH");
+			String tenKH = rs.getString("TenKH");
+			String tenDN = rs.getString("TenDN");
+			String email = rs.getString("Email");
+			long gia = rs.getLong("Gia");
+			Date ngayMua = rs.getDate("NgayMua");
+			long soLuong = rs.getLong("SoLuong");
+			String trangThai = rs.getString("TrangThai");
+			String ghiChu = rs.getString("GhiChu");
+			ds = new LichSuMuaHangBean(maLSMH, tenKH, tenDN, email, gia, ngayMua, soLuong, trangThai, ghiChu);
 		}
 		dc.cn.close();
 		return ds;

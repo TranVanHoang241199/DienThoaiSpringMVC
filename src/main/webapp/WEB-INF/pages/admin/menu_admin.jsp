@@ -49,7 +49,7 @@
 			</div>
 			<div class="col-sm-8">
 				<h2>Điện Thoại</h2>
-				<h5>Tìm Thấy .... kết quả.</h5>
+				<h5>${tbDT }</h5>
 				<div class="row">
 					<hr>
 					<c:forEach var="h" items="${dsDT}">

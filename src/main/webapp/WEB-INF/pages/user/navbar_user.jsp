@@ -30,9 +30,17 @@
 			<ul class="navbar-nav">
 				<li class="nav-item"><a class="nav-link" href="Menu">Trang
 						Chủ</a></li>
-				<li class="nav-item"><a class="nav-link" href="GioHang">Giỏ
-						Hàng</a></li>
-				<li class="nav-item"><a class="nav-link" href="DatMua">Thanh Toán</a></li>
+				<li class="nav-item"><a class="nav-link" href="GioHang"> <c:choose>
+							<c:when test="${gh.tongSachHC()!=null}">
+								Giỏ
+						Hàng<span class="badge">${gh.tongSachHC() }</span>
+							</c:when>
+							<c:otherwise>Giỏ
+						Hàng</c:otherwise>
+						</c:choose>
+				</a></li>
+				<li class="nav-item"><a class="nav-link" href="DatMua">Thanh
+						Toán</a></li>
 				<li class="nav-item dropdown"><a
 					class="nav-link dropdown-toggle" href="#" role="button"
 					data-bs-toggle="dropdown">Hãng</a>
@@ -48,9 +56,10 @@
 							class="nav-link dropdown-toggle" href="#" role="button"
 							data-bs-toggle="dropdown">${tbdnkh}</a>
 							<ul class="dropdown-menu">
-								<li><a class="dropdown-item" href="#">Thông tin khách
+								<li><a class="dropdown-item" href="ThongTinKH">Thông tin khách
 										hàng</a></li>
-								<li><a class="dropdown-item" href="LichSuMuaHang">Lịch sử mua hàng</a></li>
+								<li><a class="dropdown-item" href="LichSuMuaHang">Lịch
+										sử mua hàng</a></li>
 								<li><a class="dropdown-item" href="Menu?dx=0">Đăng Xuất</a></li>
 							</ul></li>
 					</c:when>
