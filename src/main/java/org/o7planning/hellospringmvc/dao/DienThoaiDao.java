@@ -86,7 +86,7 @@ public class DienThoaiDao {
 		boolean kt = false;
 		KN_SQL dc = new KN_SQL();
 		dc.ketNoi();
-		String sql = "INSERT INTO dbo.DienThoai (TenDT, Gia, Anh, SoLuong, MaLoai)\r\n" + "VALUES	(?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO dbo.DienThoai (TenDT, Gia, Anh, SoLuong, MaLoai, NgayNhap)\r\n" + "VALUES	(?, ?, ?, ?, ?, getDate())";
 		PreparedStatement cmd = dc.cn.prepareStatement(sql);
 		cmd.setString(1, tenDT);
 		cmd.setLong(2, gia);

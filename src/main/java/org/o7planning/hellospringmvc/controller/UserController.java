@@ -52,12 +52,15 @@ public class UserController {
 			String tim = request.getParameter("timuser");
 			String timl = request.getParameter("timl");
 			String dangxuat = request.getParameter("dx");
+			String mlnut = request.getParameter("mlnut");
 
 			// tìm kiếm
 			if (tim != null)
 				dsDT = dtBo.getTimKiem2(tim);
 			else if (timl != null)
 				dsDT = dtBo.getTimKiem2(timl);
+			else if (mlnut != null)
+				dsDT = dtBo.getTimKiem2(mlnut);
 
 			// đăng xuất
 			if (dangxuat != null) {
@@ -170,10 +173,10 @@ public class UserController {
 			String tk = request.getParameter("tk_user");
 			String pass1 = request.getParameter("pass_user1");
 			String pass2 = request.getParameter("pass_user2");
-			
+
 			System.out.println(name);
-			if (name!= null && dc != null && sdt != null && email != null && tk != null && pass1 != null
-					&& pass2 != null) {
+			if (name != null || dc != null || sdt != null || email != null || tk != null || pass1 != null
+					|| pass2 != null) {
 				if (pass1.equals(pass2)) {
 					boolean isValid = new KhachHangBo().checkTaiKhoan(tk);
 					if (!isValid) {

@@ -27,7 +27,7 @@
 </style>
 </head>
 <body>
-	
+
 	<div class="container" style="margin-top: 30px">
 		<div class="row">
 			<div class="col-sm-8">
@@ -57,37 +57,20 @@
 						class="sr-only">Next</span>
 					</a>
 				</div>
-				<br>
-
-				<%
-					ArrayList<LoaiBean> dsLoai = (ArrayList<LoaiBean>) request.getAttribute("dsLoai");
-				int i = 0;
-				%>
-				<c:forEach items="${dsMau }" var="h">
-					<button type="button" name="nut1" class=<c:url value='"${h }"'/>>
-						<%-- <%=dsLoai.get(1).getTenLoai()%> --%>
-					</button>
-					<%
-						i++;
-					%>
+				<br> <a href="Menu"><button
+						type="button" name="nut1" class="btn btn-warning">
+						Tất Cả</button></a>
+				<c:forEach var="i" begin="0" end="${dsMau.size()-2}">
+					<a href="Menu?mlnut=${dsLoai.get(i).getMaLoai() }"><button
+							type="button" name="nut1" class=<c:url value='"${dsMau[i] }"'/>>
+							${dsLoai.get(i).getTenLoai() }</button></a>
 				</c:forEach>
-				<!-- 				<button type="button" class=<c:url value='"btn btn-primary"'/>>Primary</button>
-				<button type="button" class="btn btn-secondary">Secondary</button>
-				<button type="button" class="btn btn-success">Success</button>
-				<button type="button" class="btn btn-black">Primary</button>
-				<button type="button" class="btn btn-info">Info</button>
-				<button type="button" class="btn btn-warning">Warning</button>
-				<button type="button" class="btn btn-danger">Danger</button>
-				<button type="button" class="btn btn-dark">Dark</button>
-				<button type="button" class="btn btn-light">Light</button> -->
 			</div>
 			<div class="col-sm-4">
 				<img src="<c:url value='/img/1.jpg'/>">
 			</div>
 		</div>
 	</div>
-
-
 
 	<div class="container" style="margin-top: 30px">
 		<div class="row">
@@ -98,7 +81,7 @@
 				<div class="col-md-2">
 					<br>
 					<div class="card">
-						<img class="card-img-top" src="<c:url value='/img/a1.jpg'/>"
+						<img class="card-img-top" src="<c:url value='/img/${i.getAnh()}'/>"
 							alt="Card image">
 						<div class="card-body">
 							<h4 class="card-title">${i.getTenDT() }</h4>

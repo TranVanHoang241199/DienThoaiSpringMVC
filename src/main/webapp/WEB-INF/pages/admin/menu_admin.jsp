@@ -32,10 +32,11 @@
 				<h2>Hãng sản xuất</h2>
 				<p>${tbLoai}</p>
 				<ul class="nav nav-pills flex-column">
-					<li class="nav-item"><a class="nav-link active" href="MenuAdmin">Tất
-							cả</a></li>
+					<li class="nav-item"><a class="nav-link active"
+						href="MenuAdmin">Tất cả</a></li>
 					<c:forEach items="${dsLoaim}" var="h">
-						<li class="nav-item"><a class="nav-link" href="MenuAdmin?mladm=${h.getMaLoai() }">${h.getTenLoai()}</a></li>
+						<li class="nav-item"><a class="nav-link"
+							href="MenuAdmin?mladm=${h.getMaLoai() }">${h.getTenLoai()}</a></li>
 					</c:forEach>
 					<li class="nav-item"><a class="nav-link disabled" href="#">--o0o--</a>
 					</li>
@@ -55,17 +56,19 @@
 					<c:forEach var="h" items="${dsDT}">
 						<div class="col-md-3">
 							<br>
-							<div class="card">
-								<img class="card-img-top"
-									src="<c:url value='/img/${h.getAnh()}'/>" alt="Card image">
-								<div class="card-body">
-									<h6 class="card-title">${h.getTenDT()}(${h.getMaDT()})</h6>
+							<a href="thongSoDT?msdt=${h.getMaDT() }">
+								<div class="card">
+									<img class="card-img-top"
+										src="<c:url value='/img/${h.getAnh()}'/>" alt="Card image">
+									<div class="card-body">
+										<h6 class="card-title">${h.getTenDT()}(${h.getMaDT()})</h6>
 
-									<p class="card-text">$ ${h.getGia() }</p>
-									<a href="MenuAdmin?xoadt=${h.getMaDT()}"
-										class="btn btn-danger">Xóa DT</a>
+										<p class="card-text">$ ${h.getGia() }</p>
+										<a href="MenuAdmin?xoadt=${h.getMaDT()}"
+											class="btn btn-danger">Xóa DT</a>
+									</div>
 								</div>
-							</div>
+							</a>
 						</div>
 					</c:forEach>
 

@@ -77,22 +77,14 @@ span.input-group-addon i {
 										class="form-control" name="giadt" id="name"
 										placeholder="Nhập giá" />
 								</div>
-							</div><div class="form-group">
+							</div>
+							<div class="form-group">
 								<label for="name">Ảnh</label>
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-user fa"
 										aria-hidden="true"></i></span> <input type="text"
 										class="form-control" name="anhdt" id="name"
 										placeholder="Nhập tên ảnh" />
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="name">Ngày cấp</label>
-								<div class="input-group">
-									<span class="input-group-addon"><i class="fa fa-user fa"
-										aria-hidden="true"></i></span> <input type="text"
-										class="form-control" name="ngaycapdt" id="name"
-										placeholder="Nhập ngày cấp" />
 								</div>
 							</div>
 							<div class="form-group">
@@ -115,7 +107,7 @@ span.input-group-addon i {
 							</div>
 							<br>
 							<button type="submit">Thêm Điện Thoại</button>
-							
+
 						</form>
 					</div>
 					<!--main-center"-->
@@ -133,13 +125,14 @@ span.input-group-addon i {
 						<div class="col-md-4">
 							<br>
 							<div class="card">
-								<img class="card-img-top" src="<c:url value='${h.getAnh() }'/>"
-									alt="Card image">
+								<img class="card-img-top"
+									src="<c:url value='/img/${h.getAnh()}'/>" alt="Card image">
 								<div class="card-body">
 									<h4 class="card-title">${h.getTenDT()}(${h.getMaDT()})</h4>
-									
+
 									<p class="card-text">$ ${h.getGia() }</p>
-									<a href="AddThoaiAdmin?xoadt=${h.getMaDT()}" class="btn btn-danger">Xóa DT</a>
+									<a href="AddThoaiAdmin?xoadt=${h.getMaDT()}"
+										class="btn btn-danger">Xóa DT</a>
 								</div>
 							</div>
 						</div>

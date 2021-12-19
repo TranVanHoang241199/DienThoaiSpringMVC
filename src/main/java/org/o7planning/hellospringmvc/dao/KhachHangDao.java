@@ -120,7 +120,7 @@ public class KhachHangDao {
 		// B2: lấy dữ liệu
 		String sql = "UPDATE dbo.KhachHang SET TenKH=?, DiaChi=?, SDT=?, Email=?, TenDN=? WHERE MaKH=?";
 		PreparedStatement cmd = dc.cn.prepareStatement(sql);
-		
+
 		cmd.setString(1, tenKH);
 		cmd.setString(2, diaChi);
 		cmd.setString(3, sdt);

@@ -12,11 +12,13 @@ import org.o7planning.hellospringmvc.bean.DienThoaiBean;
 import org.o7planning.hellospringmvc.bean.KhachhangBean;
 import org.o7planning.hellospringmvc.bean.LichSuMuaHangBean;
 import org.o7planning.hellospringmvc.bean.LoaiBean;
+import org.o7planning.hellospringmvc.bean.ThongSoDTBean;
 import org.o7planning.hellospringmvc.bo.AdminBo;
 import org.o7planning.hellospringmvc.bo.DienThoaiBo;
 import org.o7planning.hellospringmvc.bo.KhachHangBo;
 import org.o7planning.hellospringmvc.bo.LichSuMuaHangBo;
 import org.o7planning.hellospringmvc.bo.LoaiBo;
+import org.o7planning.hellospringmvc.bo.ThongSoDTBo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -235,6 +237,48 @@ public class AdminController {
 			session.setAttribute("dsLS", dsLS);
 			return new ModelAndView(path);
 		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@RequestMapping("/thongSoDT")
+	public ModelAndView thongSoDT(Model model, HttpServletResponse response, HttpServletRequest request,
+			HttpSession session) {
+		try {
+			String path = "admin/thongsodt_admin";
+
+			ThongSoDTBo tsBo = new ThongSoDTBo();
+
+			ThongSoDTBean tsBean = null;
+
+			String msdt = request.getParameter("msdt");
+			String mangHinh = request.getParameter("DT_mangHinh");
+			String cameraSau = request.getParameter("DT_CSau");
+			String cameraTruoc = request.getParameter("DT_CTruoc");
+			String cpu = request.getParameter("DT_Cpu");
+			String heDieuHanh = request.getParameter("DT_HDH");
+			String boNhoRam = request.getParameter("DT_Ram");
+			String pin = request.getParameter("DT_Pin");
+			String ketNoi = request.getParameter("DT_KN");
+
+			if (session.getAttribute("tbtcs") != null)
+				session.removeAttribute("tbtcs");
+
+			if (msdt != null) {
+				if (mangHinh != null) {
+					tsBo.CapNhatThongSo(mangHinh, cameraSau, cameraTruoc, cpu, heDieuHanh, boNhoRam,Long.parseLong(pin), ketNoi,
+							Integer.parseInt(msdt));
+					session.setAttribute("tbtcs", "Thành công");
+				}
+				tsBean = tsBo.getTSMaDT(Integer.parseInt(msdt));
+			}
+			
+			session.setAttribute("tbTS", Integer.parseInt(msdt));
+			session.setAttribute("tsBean", tsBean);
+			return new ModelAndView(path);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}
