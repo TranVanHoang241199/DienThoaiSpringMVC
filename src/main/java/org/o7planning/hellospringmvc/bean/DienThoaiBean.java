@@ -28,6 +28,15 @@ public class DienThoaiBean {
 		this.soLuong = soLuong;
 		this.maLoai = maLoai;
 	}
+	
+	public DienThoaiBean(String tenDT, long gia, String anh, long soLuong, String maLoai) {
+		super();
+		this.tenDT = tenDT;
+		this.gia = gia;
+		this.anh = anh;
+		this.soLuong = soLuong;
+		this.maLoai = maLoai;
+	}
 
 
 	public DienThoaiBean(int maDT, String tenDT, long gia, String anh, Date ngayNhap, long soLuong, String maLoai,

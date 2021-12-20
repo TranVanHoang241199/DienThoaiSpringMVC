@@ -29,7 +29,11 @@ public class LichSuMuaHangBo {
 		return lsDao.timkiemMa(maLS);
 	}
 	
-	public LichSuMuaHangBean getChiTietLS(long ma) throws Exception {
+	public LichSuMuaHangBean getChiTietLS(int ma) throws Exception {
 		return lsDao.getChiTietLS(ma);
+	}
+	
+	public int suaLSTT(int maLS, String trangThai) throws Exception {
+		return lsDao.suaLSTT(maLS, trangThai);
 	}
 }

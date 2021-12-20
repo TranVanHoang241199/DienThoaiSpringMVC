@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Đăng Ký</title>
-
+<script src='https://www.google.com/recaptcha/api.js?hl=vi'></script>
 <link
 	href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css"
 	rel="stylesheet" id="bootstrap-css">
@@ -196,6 +196,13 @@ input, input::-webkit-input-placeholder {
 							</div>
 						</div>
 					</div>
+					
+					<div class="form-group">
+						 <div class="g-recaptcha"
+          data-sitekey="6LdoYbcdAAAAAM9Q9kcfyfd1K3inzzXG_krKatqZ"></div>
+					</div>
+					
+					    
 
 					<div class="form-group ">
 						<button type="submit"

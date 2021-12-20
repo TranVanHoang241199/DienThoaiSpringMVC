@@ -2,6 +2,7 @@ package org.o7planning.hellospringmvc.bo;
 
 import java.util.ArrayList;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.o7planning.hellospringmvc.bean.KhachhangBean;
 import org.o7planning.hellospringmvc.dao.KhachHangDao;
 
@@ -15,8 +16,13 @@ public class KhachHangBo {
 	public boolean dangNhap(String tenDN, String pass) throws Exception {
 		boolean kt = false;
 		for (KhachhangBean i : getKhachHang()) {
-			if (i.getTenDN().equals(tenDN.trim()) && i.getPass().equals(pass.trim()))
-				kt = true;
+			if (i.getTenDN().equals(tenDN)) {
+				if (BCrypt.checkpw(pass, i.getPass())) {
+					return true;
+				} else {
+					return false;
+				}
+			}
 		}
 		return kt;
 	}
@@ -26,6 +32,7 @@ public class KhachHangBo {
 	}
 
 	public boolean dangKy(KhachhangBean kh) throws Exception {
+		kh.setPass(BCrypt.hashpw(kh.getPass(), BCrypt.gensalt(12)));
 		return khDao.dangKy(kh);
 	}
 
@@ -35,9 +42,10 @@ public class KhachHangBo {
 
 	public ArrayList<KhachhangBean> timKhachHang(String key) throws Exception {
 		ArrayList<KhachhangBean> ds = new ArrayList<KhachhangBean>();
-		
+
 		for (KhachhangBean k : getKhachHang()) {
-			if(k.getTenDN().toUpperCase().contains(key.toUpperCase().trim())||k.getTenKH().toUpperCase().contains(key.toUpperCase().trim()))
+			if (k.getTenDN().toUpperCase().contains(key.toUpperCase().trim())
+					|| k.getTenKH().toUpperCase().contains(key.toUpperCase().trim()))
 				ds.add(k);
 		}
 		return ds;
@@ -46,7 +54,7 @@ public class KhachHangBo {
 	public KhachhangBean checkTKTT(String taiKhoan) throws Exception {
 		return khDao.checkTKTT(taiKhoan);
 	}
-	
+
 	public boolean themKH(long maKH, String tenKH, String diaChi, String sdt, String email, String tenDN)
 			throws Exception {
 		return khDao.themKH(maKH, tenKH, diaChi, sdt, email, tenDN);

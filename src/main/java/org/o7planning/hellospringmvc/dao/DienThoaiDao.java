@@ -98,6 +98,23 @@ public class DienThoaiDao {
 		dc.cn.close();
 		return kt;
 	}
+	
+	public int AddPhone(DienThoaiBean dtbean) throws Exception {
+		int rs = 0;
+		KN_SQL dc = new KN_SQL();
+		dc.ketNoi();
+		String sql = "INSERT INTO dbo.DienThoai (TenDT, Gia, Anh, SoLuong, MaLoai, NgayNhap)\r\n" + "VALUES	(?, ?, ?, ?, ?, getDate())";
+		PreparedStatement cmd = dc.cn.prepareStatement(sql);
+		cmd.setString(1, dtbean.getTenDT());
+		cmd.setLong(2, dtbean.getGia());
+		cmd.setString(3, dtbean.getAnh());
+		cmd.setLong(4, dtbean.getSoLuong());
+		cmd.setString(5, dtbean.getMaLoai());
+		
+		rs = cmd.executeUpdate();
+		
+		return rs;
+	}
 
 	public boolean xoadt(int maDT) throws Exception {
 		boolean kt = false;

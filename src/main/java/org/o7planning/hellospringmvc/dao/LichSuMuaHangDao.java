@@ -134,14 +134,14 @@ public class LichSuMuaHangDao {
 		return ds;
 	}
 
-	public LichSuMuaHangBean getChiTietLS(long ma) throws Exception {
+	public LichSuMuaHangBean getChiTietLS(int ma) throws Exception {
 		LichSuMuaHangBean ds = null;
 		KN_SQL dc = new KN_SQL();
 		dc.ketNoi();
 
 		String sql = "SELECT * FROM dbo.LichSuMuaHang WHERE MaLSMH = ?";
 		PreparedStatement cmd = dc.cn.prepareStatement(sql);
-		cmd.setLong(1, ma);
+		cmd.setInt(1, ma);
 		ResultSet rs = cmd.executeQuery();
 		while (rs.next()) {
 			long maLSMH = rs.getLong("MaLSMH");
@@ -157,5 +157,17 @@ public class LichSuMuaHangDao {
 		}
 		dc.cn.close();
 		return ds;
+	}
+
+	public int suaLSTT(int maLS, String trangThai) throws Exception {
+		int rs = 0;
+		KN_SQL dc = new KN_SQL();
+		dc.ketNoi();
+		String sql = "UPDATE dbo.LichSuMuaHang SET TrangThai= ? WHERE MaLSMH= ?";
+		PreparedStatement cmd = dc.cn.prepareStatement(sql);
+		cmd.setString(1, trangThai);
+		cmd.setInt(2, maLS);
+		rs = cmd.executeUpdate();
+		return rs;
 	}
 }

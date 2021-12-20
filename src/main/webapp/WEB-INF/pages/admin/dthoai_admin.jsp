@@ -58,7 +58,7 @@ span.input-group-addon i {
 					<div class="main-center">
 						<h2>Thêm điện thoại</h2>
 						<br>
-						<form class="" method="post" action="AddThoaiAdmin">
+						<form class="" method="post" action="<c:url value="/addPhone" />"  enctype= "multipart/form-data">
 
 							<div class="form-group">
 								<label for="email">Tên Điện Thoại</label>
@@ -78,15 +78,7 @@ span.input-group-addon i {
 										placeholder="Nhập giá" />
 								</div>
 							</div>
-							<div class="form-group">
-								<label for="name">Ảnh</label>
-								<div class="input-group">
-									<span class="input-group-addon"><i class="fa fa-user fa"
-										aria-hidden="true"></i></span> <input type="text"
-										class="form-control" name="anhdt" id="name"
-										placeholder="Nhập tên ảnh" />
-								</div>
-							</div>
+
 							<div class="form-group">
 								<label for="name">Số Lượng</label>
 								<div class="input-group">
@@ -100,11 +92,26 @@ span.input-group-addon i {
 								<label for="name">Mã Loại</label>
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-user fa"
-										aria-hidden="true"></i></span> <input type="text"
-										class="form-control" name="mldt" id="name"
-										placeholder="Nhập mã loại" />
+										aria-hidden="true"></i></span> 
+										<select class="form-control" name="mldt" id="name">
+										   <c:forEach var="item" items="${loaiList }">
+										   		 <option value="${item.maLoai }">${item.tenLoai }</option>
+										   </c:forEach>
+										  </select>
 								</div>
 							</div>
+							
+							<input type="file" name="txtfile">
+							
+						<!-- 	<div class="form-group">
+								<label for="usr">ẢNH:</label>
+								<div class="custom-file">
+									<input type="file" class="custom-file-input" name="txtfile">
+									<label class="custom-file-label" for="customFile"
+										id="customFile">Choose file</label>
+								</div>
+							</div> -->
+
 							<br>
 							<button type="submit">Thêm Điện Thoại</button>
 

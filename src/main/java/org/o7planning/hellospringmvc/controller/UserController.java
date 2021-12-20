@@ -15,6 +15,7 @@ import org.o7planning.hellospringmvc.bo.GioHangBo;
 import org.o7planning.hellospringmvc.bo.KhachHangBo;
 import org.o7planning.hellospringmvc.bo.LichSuMuaHangBo;
 import org.o7planning.hellospringmvc.bo.LoaiBo;
+import org.o7planning.hellospringmvc.capcha.VerifyUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -173,9 +174,18 @@ public class UserController {
 			String tk = request.getParameter("tk_user");
 			String pass1 = request.getParameter("pass_user1");
 			String pass2 = request.getParameter("pass_user2");
-
 			System.out.println(name);
-			if (name != null || dc != null || sdt != null || email != null || tk != null || pass1 != null
+			
+			boolean valid = true;
+			String errorString = "";
+			
+			String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
+			
+			valid = VerifyUtils.verify(gRecaptchaResponse);
+			 if (!valid) {
+	             model.addAttribute("error", "Captcha invalid!");
+	         }
+			 else if (name != null || dc != null || sdt != null || email != null || tk != null || pass1 != null
 					|| pass2 != null) {
 				if (pass1.equals(pass2)) {
 					boolean isValid = new KhachHangBo().checkTaiKhoan(tk);
@@ -229,7 +239,7 @@ public class UserController {
 			}
 
 			if (hvt != null && dc != null && sdt != null) {
-				lsBo.themLSMH(hvt, tendn, email, gh.tongTien(), gh.tongSachHC(), "Đã Thanh Toán", "");
+				lsBo.themLSMH(hvt, tendn, email, gh.tongTien(), gh.tongSachHC(), "Chưa thanh toán", "");
 				session.removeAttribute("gh");
 			}
 
@@ -279,7 +289,7 @@ public class UserController {
 			LichSuMuaHangBo lsBo = new LichSuMuaHangBo();
 
 			String ma = request.getParameter("ctls");
-			LichSuMuaHangBean lsBean = lsBo.getChiTietLS(Long.parseLong(ma));
+			LichSuMuaHangBean lsBean = lsBo.getChiTietLS(Integer.parseInt(ma));
 
 			session.setAttribute("ctLS", lsBean);
 			return new ModelAndView(path);

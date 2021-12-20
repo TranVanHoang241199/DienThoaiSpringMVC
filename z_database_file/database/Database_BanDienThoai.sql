@@ -55,7 +55,7 @@ CREATE TABLE KhachHang (
 	SDT nvarchar(20),
 	Email nvarchar(50),
 	TenDN nvarchar(50),
-	PassDN nvarchar(30)
+	PassDN nvarchar(255)
 
 	primary key(MaKH)
 )
@@ -101,14 +101,6 @@ ALTER TABLE dbo.LichSuChinhSua ADD CONSTRAINT PK_LSCS FOREIGN KEY(TenDangNhap) R
 INSERT INTO dbo.adminn (TenDangNhap, MatKhau, Quyen)
 VALUES	(N'ADMIN', N'ADMIN', 0 ),
 		(N'hoang123', N'hoang123', 1)
-
-INSERT INTO dbo.KhachHang (TenKH, DiaChi, Email, SDT, TenDN, PassDN)
-VALUES	(N'Trần Văn Hoàng', N'Huế', N'tranvanhoang@gmail.com', N'0961523842', N'h123', N'h123'),
-		(N'Trần Văn Thành Nam', N'Đà Năng', N'nam@gmail.com', N'0961523123', N'Nam1', N'1'),
-		(N'Nguyễn Phúc Thành Long', N'Bình Định', N'long@gmail.com', N'0961523145', N'long1', N'1'),
-		(N'Nguyễn Văn Thanh Nhân', N'Hội An', N'nhan@gmail.com', N'0961523345', N'nhan1', N'1'),
-		(N'Lê Ngọc Huy', N'Thanh Hóa', N'huy@gmail.com', N'0961523543', N'huy1', N'1'),
-		(N'Nguyễn Văn Minh Nhật', N'Quang Bình', N'nhat@gmail.com', N'0961523765', N'nhat1', N'1')
 
 INSERT INTO dbo.Loai (MaLoai, TenLoai)
 VALUES	('01', N'Iphone'),
@@ -203,11 +195,13 @@ UPDATE dbo.Loai
 SET TenLoai=N''
 WHERE MaLoai=11
 
+UPDATE dbo.LichSuMuaHang SET TrangThai= N'Chưa thành công' WHERE MaLSMH= 1
+
 DELETE FROM dbo.Loai WHERE MaLoai='11'
 
-SELECT * FROM  dbo.ThongSoKyThuat
+SELECT * FROM  dbo.KhachHang
 
-DELETE FROM dbo.ThongSoKyThuat
+DELETE FROM dbo.KhachHang
 
 SELECT * FROM dbo.adminn WHERE TenDangNhap = N'ADMIN' AND MatKhau = N'ADMI'
 

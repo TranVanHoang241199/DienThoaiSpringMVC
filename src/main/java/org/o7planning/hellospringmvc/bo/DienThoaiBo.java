@@ -38,4 +38,8 @@ public class DienThoaiBo {
 	public boolean xoadt(int maDT) throws Exception {
 		return dtDao.xoadt(maDT);
 	}
+	
+	public int AddPhone(DienThoaiBean dtbean) throws Exception {
+		return dtDao.AddPhone(dtbean);
+	}
 }
