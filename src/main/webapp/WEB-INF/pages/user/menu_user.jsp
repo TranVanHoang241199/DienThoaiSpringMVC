@@ -81,8 +81,8 @@
 				<div class="col-md-2">
 					<br>
 					<div class="card">
-						<img class="card-img-top" src="<c:url value='/img/${i.getAnh()}'/>"
-							alt="Card image">
+						<a href="ChiTietDT?maDTT=${i.getMaDT() }"><img class="card-img-top" src="<c:url value='/img/${i.getAnh()}'/>"
+							alt="Card image"></a>
 						<div class="card-body">
 							<h4 class="card-title">${i.getTenDT() }</h4>
 							<p class="card-text">$ ${i.getGia() }</p>

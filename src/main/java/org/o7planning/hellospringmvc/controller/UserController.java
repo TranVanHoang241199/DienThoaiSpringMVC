@@ -10,11 +10,13 @@ import org.o7planning.hellospringmvc.bean.DienThoaiBean;
 import org.o7planning.hellospringmvc.bean.KhachhangBean;
 import org.o7planning.hellospringmvc.bean.LichSuMuaHangBean;
 import org.o7planning.hellospringmvc.bean.LoaiBean;
+import org.o7planning.hellospringmvc.bean.ThongSoDTBean;
 import org.o7planning.hellospringmvc.bo.DienThoaiBo;
 import org.o7planning.hellospringmvc.bo.GioHangBo;
 import org.o7planning.hellospringmvc.bo.KhachHangBo;
 import org.o7planning.hellospringmvc.bo.LichSuMuaHangBo;
 import org.o7planning.hellospringmvc.bo.LoaiBo;
+import org.o7planning.hellospringmvc.bo.ThongSoDTBo;
 import org.o7planning.hellospringmvc.capcha.VerifyUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -115,7 +117,7 @@ public class UserController {
 			String sl = request.getParameter("sl");
 
 			GioHangBo gh;
-			
+
 			session.removeAttribute("tbGH");
 
 			if (session.getAttribute("gh") != null) {
@@ -335,6 +337,50 @@ public class UserController {
 			}
 
 			session.setAttribute("khBean", khBean);
+			return new ModelAndView(path);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@RequestMapping("/ChiTietDT")
+	public ModelAndView chiTietDT(Model model, HttpServletResponse response, HttpServletRequest request,
+			HttpSession session) {
+		try {
+			String path = "user/chitietdienthoai_user";
+
+			DienThoaiBo dtBo = new DienThoaiBo();
+			ThongSoDTBo tsBo = new ThongSoDTBo();
+
+			// mua
+			String maDT = request.getParameter("ms");
+			String tenDT = request.getParameter("ts");
+			String maLoai = request.getParameter("ml");
+			String anh = request.getParameter("ah");
+			String gia = request.getParameter("gia");
+
+			if (maDT != null) {
+				GioHangBo gh;
+				if (session.getAttribute("gh") == null) {
+					gh = new GioHangBo();
+					session.setAttribute("gh", gh);
+				}
+				gh = (GioHangBo) session.getAttribute("gh");
+				gh.themGH(maDT, tenDT, maLoai, anh, Long.parseLong(gia), (long) 1);
+				session.setAttribute("gh", gh);
+			}else {
+				String maDTT = request.getParameter("maDTT");
+				session.setAttribute("maDTT", maDTT);
+			}
+			
+			String maDT1 = (String) session.getAttribute("maDTT");
+
+			DienThoaiBean dtBean = dtBo.getDTBean(Integer.parseInt(maDT1));
+			ThongSoDTBean tsBean = tsBo.getTSMaDT(dtBean.getMaDT());
+
+			session.setAttribute("dtBean", dtBean);
+			session.setAttribute("tsBean", tsBean);
 			return new ModelAndView(path);
 		} catch (Exception e) {
 			e.printStackTrace();
