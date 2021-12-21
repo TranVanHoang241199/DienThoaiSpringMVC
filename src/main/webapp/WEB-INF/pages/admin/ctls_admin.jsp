@@ -26,6 +26,13 @@
 <body>
 	<br>
 	<br>
+	<c:choose>
+		<c:when test="${tbctls!=null }">
+			<script>
+				alert("cập nhật thành công");
+			</script>
+		</c:when>
+	</c:choose>
 	<div class="container mt-3">
 		<h1>${ctLSs.getTenKH()}--${ctLSs.getNgayMua() }</h1>
 		<br> <br> <br>
@@ -55,13 +62,13 @@
 							
 							 <select class="form-control me-2" name="status" id="name">
 								<c:choose>
-									<c:when test="${ctLSs.getTrangThai() == \"Đã thanh toán\" }">
-										<option value="Đã thanh toán" selected="selected">Đã thanh toán</option>
-										<option value="Chưa thanh toán">Chưa thanh toán</option>
+									<c:when test="${ctLSs.getTrangThai() == \"Đã xác nhận.\" }">
+										<option value="Đã xác nhận." selected="selected">Đã xác nhận.</option>
+										<option value="Chưa xác nhận.">Chưa xác nhận.</option>
 									</c:when>
 									<c:otherwise>
-										<option value="Đã thanh toán" >Đã thanh toán</option>
-										<option value="Chưa thanh toán" selected="selected">Chưa thanh toán</option>
+										<option value="Đã xác nhận." >Đã xác nhận.</option>
+										<option value="Chưa xác nhận." selected="selected">Chưa xác nhận.</option>
 									</c:otherwise>
 								</c:choose>
 							</select>

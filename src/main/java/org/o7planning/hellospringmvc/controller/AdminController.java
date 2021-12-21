@@ -31,11 +31,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class AdminController {
-	private static final String UPLOAD_DIRECTORY = "resources/img";   
-	private static final int MEMORY_THRESHOLD   = 1024 * 1024 * 3;  // 3MB
-	private static final int MAX_FILE_SIZE      = 1024 * 1024 * 40; // 40MB
-	private static final int MAX_REQUEST_SIZE   = 1024 * 1024 * 50; // 50MB
-	
+	private static final String UPLOAD_DIRECTORY = "resources/img";
+	private static final int MEMORY_THRESHOLD = 1024 * 1024 * 3; // 3MB
+	private static final int MAX_FILE_SIZE = 1024 * 1024 * 40; // 40MB
+	private static final int MAX_REQUEST_SIZE = 1024 * 1024 * 50; // 50MB
+
 	@RequestMapping("/DangNhapAdmin")
 	public ModelAndView DangNhap(Model model, HttpServletResponse response, HttpServletRequest request,
 			HttpSession session) {
@@ -70,6 +70,7 @@ public class AdminController {
 		try {
 			LoaiBo lBo = new LoaiBo();
 			DienThoaiBo dtBo = new DienThoaiBo();
+			ThongSoDTBo tsBo = new ThongSoDTBo();
 
 			ArrayList<LoaiBean> dsLoai = lBo.getLoai();
 			ArrayList<DienThoaiBean> dsdt = dtBo.getDienThoai();
@@ -87,9 +88,12 @@ public class AdminController {
 				dsdt = dtBo.getTimKiem2(timkiem);
 			else if (mladm != null)
 				dsdt = dtBo.getTimKiem2(mladm);
-			if (xoadt != null)
+			if (xoadt != null) {
+				tsBo.deleteTSKT(Integer.parseInt(xoadt));
 				dtBo.xoadt(Integer.parseInt(xoadt));
+			}
 
+			dsdt = dtBo.getDienThoai();
 			session.setAttribute("dsDT", dsdt);
 			session.setAttribute("dsLoaim", dsLoai);
 			String path = "admin/menu_admin";
@@ -151,29 +155,22 @@ public class AdminController {
 	public ModelAndView dienThoai(Model model, HttpServletResponse response, HttpServletRequest request,
 			HttpSession session) {
 		try {
-			
+
 			DienThoaiBo dtBo = new DienThoaiBo();
 			LoaiBo loaiBo = new LoaiBo();
+			ThongSoDTBo tsBo = new ThongSoDTBo();
 
 			List<LoaiBean> loaiList = loaiBo.getLoai();
 			session.setAttribute("loaiList", loaiList);
 
 			ArrayList<DienThoaiBean> dsDT = dtBo.getDienThoai();
 
-			String tenDT = request.getParameter("tendt");
-			String gia = request.getParameter("giadt");
-			String anh = request.getParameter("anhdt");
-			String soLuong = request.getParameter("soluongdt");
-			String maLoai = request.getParameter("mldt");
-
 			String xoadt = request.getParameter("xoadt");
 
-			if (tenDT != null && maLoai != null) {
-				dtBo.themDienThoai2(tenDT, Long.parseLong(gia), anh, Long.parseLong(soLuong), maLoai);
-			}
-
-			if (xoadt != null)
+			if (xoadt != null) {
+				tsBo.deleteTSKT(Integer.parseInt(xoadt));
 				dtBo.xoadt(Integer.parseInt(xoadt));
+			}
 
 			dsDT = dtBo.getDienThoai();
 			session.setAttribute("dsDT", dsDT);
@@ -188,91 +185,124 @@ public class AdminController {
 			return null;
 		}
 	}
-	
 
 	@RequestMapping("/addPhone")
-	public ModelAndView AddHost(Model model, HttpServletRequest request, HttpServletResponse response, HttpSession session)  {
-		
+	public ModelAndView AddHost(Model model, HttpServletRequest request, HttpServletResponse response,
+			HttpSession session) {
+
 		DienThoaiBo dienThoaiBo = new DienThoaiBo();
 		String tendt = "";
 		String giadt = "";
 		String soluongdt = "";
 		String mldt = "";
 		String img = "";
-		
-		if(!ServletFileUpload.isMultipartContent(request)) {	//
-			request.setAttribute("resultadd", (long)0);		
+
+		if (!ServletFileUpload.isMultipartContent(request)) { //
+			request.setAttribute("resultadd", (long) 0);
 			return new ModelAndView("redirect:/AddThoaiAdmin");
 		}
-		
+
 		DiskFileItemFactory factory = new DiskFileItemFactory();
 		factory.setSizeThreshold(MEMORY_THRESHOLD);
-	    factory.setRepository(new File(System.getProperty("java.io.tmpdir")));
-	    
+		factory.setRepository(new File(System.getProperty("java.io.tmpdir")));
+
 		ServletFileUpload upload = new ServletFileUpload(factory);
 		upload.setFileSizeMax(MAX_FILE_SIZE);
-	    upload.setSizeMax(MAX_REQUEST_SIZE);
-	    
-		String uploadPath = request.getServletContext().getRealPath("")
-				+ File.separator + UPLOAD_DIRECTORY;	
-		
+		upload.setSizeMax(MAX_REQUEST_SIZE);
+
+		String uploadPath = request.getServletContext().getRealPath("") + File.separator + UPLOAD_DIRECTORY;
+
 		File uploadDir = new File(uploadPath);
 		System.out.println(uploadDir);
-		
-		if(!uploadDir.exists()) {	
+
+		if (!uploadDir.exists()) {
 			uploadDir.mkdir();
 		}
-		
+
 		try {
-			List<FileItem> fileItems = upload.parseRequest(request);	//lấy về các đối tượng gửi lên
+			List<FileItem> fileItems = upload.parseRequest(request); // lấy về các đối tượng gửi lên
 			int s = fileItems.size();
-			if(fileItems != null && fileItems.size() > 0) {		
+			if (fileItems != null && fileItems.size() > 0) {
 				int i = 0;
-				for(FileItem item : fileItems) {		//duyệt các đối tượng gồm file và các control
-					if(!item.isFormField()) {			//nếu k phải control => upfile lên
-							
-						String fileName = item.getName();		//get tên file	vd: anh1.png
-						String filePath = uploadPath + File.separator + fileName;	//get đường dẫn file 
-						File storeFile = new File(filePath);						//tạo file
-						item.write(storeFile);										//lưu file				
-						
+				for (FileItem item : fileItems) { // duyệt các đối tượng gồm file và các control
+					if (!item.isFormField()) { // nếu k phải control => upfile lên
+
+						String fileName = item.getName(); // get tên file vd: anh1.png
+						String filePath = uploadPath + File.separator + fileName; // get đường dẫn file
+						File storeFile = new File(filePath); // tạo file
+						item.write(storeFile); // lưu file
+
 						img = fileName;
-					}
-					else {
+					} else {
 						String getitem = item.getFieldName();
-						
-						if(getitem.equals("tendt")) {
+
+						if (getitem.equals("tendt")) {
 							tendt = item.getString();
 						}
-						if(getitem.equals("giadt")) {
+						if (getitem.equals("giadt")) {
 							giadt = item.getString();
 						}
-						if(getitem.equals("soluongdt")) {
+						if (getitem.equals("soluongdt")) {
 							soluongdt = item.getString();
 						}
-						if(getitem.equals("mldt")) {
+						if (getitem.equals("mldt")) {
 							mldt = item.getString();
 						}
 					}
 				}
-					
+
 			}
-			DienThoaiBean dtbean = new DienThoaiBean(tendt, Long.parseLong(giadt), img, Long.parseLong(soluongdt), mldt);
-			
+			DienThoaiBean dtbean = new DienThoaiBean(tendt, Long.parseLong(giadt), img, Long.parseLong(soluongdt),
+					mldt);
+
 			int rs = dienThoaiBo.AddPhone(dtbean);
-			
-			if(rs > 0)
-			{
+
+			if (rs > 0) {
 				return new ModelAndView("redirect:/AddThoaiAdmin");
-			}
-			else {
+			} else {
 				return new ModelAndView("redirect:/AddThoaiAdmin");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return new ModelAndView("redirect:/AddThoaiAdmin");
+	}
+
+	@RequestMapping("/editDienThoai")
+	public ModelAndView editDienThoai(Model model, HttpServletResponse response, HttpServletRequest request,
+			HttpSession session) {
+		try {
+			String path = "admin/editdienthoai_admin";
+
+			DienThoaiBo dtBo = new DienThoaiBo();
+
+			String maSP = request.getParameter("maSP");
+
+			String tenDT = request.getParameter("tendt");
+			String gia = request.getParameter("gia");
+			String soLuong = request.getParameter("soLuong");
+			String maLoai = request.getParameter("mldt");
+			String img = request.getParameter("txtfile");
+			
+			session.removeAttribute("tB");
+
+			if (tenDT != null || gia != null || soLuong != null || maLoai != null || img != null) {
+				boolean kt = dtBo.editPhome(Integer.parseInt(maSP), tenDT, Long.parseLong(gia), img, Long.parseLong(soLuong),
+						maLoai);
+				if(kt)
+					session.setAttribute("tB", "Cập nhật thành công.");
+			}
+
+			DienThoaiBean dtBean = dtBo.getDTBean(Integer.parseInt(maSP));
+
+			session.setAttribute("dtBean", dtBean);
+			return new ModelAndView(path);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
 	}
 
 	@RequestMapping("/dangXuatadmin")
@@ -317,7 +347,6 @@ public class AdminController {
 			e.printStackTrace();
 			return null;
 		}
-
 	}
 
 	@RequestMapping("/lichSuAdmin")
@@ -392,13 +421,18 @@ public class AdminController {
 			String path = "admin/ctls_admin";
 
 			LichSuMuaHangBo lsBo = new LichSuMuaHangBo();
-			
+
 			LichSuMuaHangBean lsBean;
 
 			String ma = request.getParameter("ctls");
 			String trangThai = request.getParameter("status");
 
+			session.removeAttribute("tbctls");
+
 			int rs = lsBo.suaLSTT(Integer.parseInt(ma), trangThai);
+
+			if (rs != 0)
+				session.setAttribute("tbctls", "xác nhận đơn hàng thành công.");
 
 			lsBean = lsBo.getChiTietLS(Integer.parseInt(ma));
 			session.setAttribute("ctLSs", lsBean);

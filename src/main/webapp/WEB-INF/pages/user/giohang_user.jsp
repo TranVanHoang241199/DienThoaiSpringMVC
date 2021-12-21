@@ -35,7 +35,13 @@
 			</div>
 		</c:when>
 		<c:otherwise>
-
+			<c:choose>
+				<c:when test="${tbGH!=null }">
+					<script>
+						alert("Cập nhật thành công.");
+					</script>
+				</c:when>
+			</c:choose>
 			<div class="container mt-4">
 				<div id="thongbao" class="alert alert-danger d-none face"
 					role="alert">

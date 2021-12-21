@@ -88,6 +88,11 @@ public class UserController {
 				session.setAttribute("gh", gh);
 			}
 
+			if (dsDT.size() > 0)
+				session.setAttribute("tbdt", "tìm thấy " + dsDT.size() + " kết quả.");
+			else
+				session.setAttribute("tbdt", "không có sản phẩm nào.");
+
 			session.setAttribute("dsMau", getNut());
 			session.setAttribute("dsDT", dsDT);
 			session.setAttribute("dsLoai", dsLoai);
@@ -110,14 +115,17 @@ public class UserController {
 			String sl = request.getParameter("sl");
 
 			GioHangBo gh;
+			
+			session.removeAttribute("tbGH");
 
 			if (session.getAttribute("gh") != null) {
 				gh = (GioHangBo) session.getAttribute("gh");
 				if (xoa != null) {
 					gh.xoaGH(xoa);
-				} else if (them != null)
+				} else if (them != null) {
+					session.setAttribute("tbGH", "cập nhật thành công.");
 					gh.capNhatSL(them, Long.parseLong(sl));
-
+				}
 				if (xoaALL != null) {
 					session.removeAttribute("gh");
 					session.removeAttribute("dsGH");
@@ -175,17 +183,16 @@ public class UserController {
 			String pass1 = request.getParameter("pass_user1");
 			String pass2 = request.getParameter("pass_user2");
 			System.out.println(name);
-			
+
 			boolean valid = true;
 			String errorString = "";
-			
+
 			String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
-			
+
 			valid = VerifyUtils.verify(gRecaptchaResponse);
-			 if (!valid) {
-	             model.addAttribute("error", "Captcha invalid!");
-	         }
-			 else if (name != null || dc != null || sdt != null || email != null || tk != null || pass1 != null
+			if (!valid) {
+				model.addAttribute("error", "Captcha invalid!");
+			} else if (name != null || dc != null || sdt != null || email != null || tk != null || pass1 != null
 					|| pass2 != null) {
 				if (pass1.equals(pass2)) {
 					boolean isValid = new KhachHangBo().checkTaiKhoan(tk);
@@ -239,7 +246,7 @@ public class UserController {
 			}
 
 			if (hvt != null && dc != null && sdt != null) {
-				lsBo.themLSMH(hvt, tendn, email, gh.tongTien(), gh.tongSachHC(), "Chưa thanh toán", "");
+				lsBo.themLSMH(hvt, tendn, email, gh.tongTien(), gh.tongSachHC(), "Chưa xác nhận.", "");
 				session.removeAttribute("gh");
 			}
 

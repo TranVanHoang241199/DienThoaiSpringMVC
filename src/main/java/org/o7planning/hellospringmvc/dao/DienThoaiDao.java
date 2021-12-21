@@ -86,7 +86,8 @@ public class DienThoaiDao {
 		boolean kt = false;
 		KN_SQL dc = new KN_SQL();
 		dc.ketNoi();
-		String sql = "INSERT INTO dbo.DienThoai (TenDT, Gia, Anh, SoLuong, MaLoai, NgayNhap)\r\n" + "VALUES	(?, ?, ?, ?, ?, getDate())";
+		String sql = "INSERT INTO dbo.DienThoai (TenDT, Gia, Anh, SoLuong, MaLoai, NgayNhap)\r\n"
+				+ "VALUES	(?, ?, ?, ?, ?, getDate())";
 		PreparedStatement cmd = dc.cn.prepareStatement(sql);
 		cmd.setString(1, tenDT);
 		cmd.setLong(2, gia);
@@ -98,21 +99,22 @@ public class DienThoaiDao {
 		dc.cn.close();
 		return kt;
 	}
-	
+
 	public int AddPhone(DienThoaiBean dtbean) throws Exception {
 		int rs = 0;
 		KN_SQL dc = new KN_SQL();
 		dc.ketNoi();
-		String sql = "INSERT INTO dbo.DienThoai (TenDT, Gia, Anh, SoLuong, MaLoai, NgayNhap)\r\n" + "VALUES	(?, ?, ?, ?, ?, getDate())";
+		String sql = "INSERT INTO dbo.DienThoai (TenDT, Gia, Anh, SoLuong, MaLoai, NgayNhap)\r\n"
+				+ "VALUES	(?, ?, ?, ?, ?, getDate())";
 		PreparedStatement cmd = dc.cn.prepareStatement(sql);
 		cmd.setString(1, dtbean.getTenDT());
 		cmd.setLong(2, dtbean.getGia());
 		cmd.setString(3, dtbean.getAnh());
 		cmd.setLong(4, dtbean.getSoLuong());
 		cmd.setString(5, dtbean.getMaLoai());
-		
+
 		rs = cmd.executeUpdate();
-		
+
 		return rs;
 	}
 
@@ -125,6 +127,50 @@ public class DienThoaiDao {
 		PreparedStatement cmd = dc.cn.prepareStatement(sql);
 		cmd.setInt(1, maDT);
 
+		if (cmd.executeUpdate() != 0)
+			kt = true;
+		dc.cn.close();
+		return kt;
+	}
+
+	public DienThoaiBean getDTBean(int maDT) throws Exception {
+		DienThoaiBean ds = null;
+		KN_SQL dc = new KN_SQL();
+		dc.ketNoi();
+
+		String sql = "SELECT * FROM DienThoai where MaDT=?";
+		PreparedStatement cmd = dc.cn.prepareStatement(sql);
+		cmd.setInt(1, maDT);
+		ResultSet rs = cmd.executeQuery();
+		if (rs.next()) {
+			int maDTt = rs.getInt("MaDT");
+			String tenDT = rs.getString("TenDT");
+			long gia = rs.getLong("Gia");
+			String anh = rs.getString("Anh");
+			Date ngayNhap = rs.getDate("NgayNhap");
+			long soLuong = rs.getLong("SoLuong");
+			String maLoai = rs.getString("MaLoai");
+			int sao = rs.getInt("sao");
+			String danhGia = rs.getString("DanhGia");
+			ds = new DienThoaiBean(maDTt, tenDT, gia, anh, ngayNhap, soLuong, maLoai, sao, danhGia);
+		}
+		dc.cn.close();
+		return ds;
+	}
+
+	public boolean editPhome(int maDT, String tenDT, long gia, String anh, Long soLuong, String maLoai)
+			throws Exception {
+		boolean kt = false;
+		KN_SQL dc = new KN_SQL();
+		dc.ketNoi();
+		String sql = "UPDATE dbo.DienThoai SET TenDT = ?, Gia = ?, SoLuong = ?, MaLoai = ? WHERE MaDT= ?";
+		PreparedStatement cmd = dc.cn.prepareStatement(sql);
+		cmd.setString(1, tenDT);
+		cmd.setLong(2, gia);
+		// cmd.setString(3, anh);
+		cmd.setLong(3, soLuong);
+		cmd.setString(4, maLoai);
+		cmd.setInt(5, maDT);
 		if (cmd.executeUpdate() != 0)
 			kt = true;
 		dc.cn.close();

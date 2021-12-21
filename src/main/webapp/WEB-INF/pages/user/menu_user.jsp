@@ -75,7 +75,7 @@
 	<div class="container" style="margin-top: 30px">
 		<div class="row">
 			<h3>Điện Thoại</h3>
-			<h7>Tìm Thấy .... kết quả.</h7>
+			<h7>${tbdt }</h7>
 			<br>
 			<c:forEach items="${dsDT }" var="i">
 				<div class="col-md-2">

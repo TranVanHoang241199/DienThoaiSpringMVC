@@ -123,4 +123,19 @@ public class ThongSoDTDao {
 		dc.cn.close();
 		return kt;
 	}
+	
+	public boolean deleteTSKT(int maDT) throws Exception {
+		boolean kt = false;
+		KN_SQL dc= new KN_SQL();
+		dc.ketNoi();
+		
+		String sql = "DELETE FROM dbo.ThongSoKyThuat WHERE maDT=?";
+		PreparedStatement cmd = dc.cn.prepareStatement(sql);
+		cmd.setInt(1, maDT);
+		
+		if(cmd.executeUpdate()!=0)
+			kt = true;
+		dc.cn.close();
+		return kt;
+	}
 }

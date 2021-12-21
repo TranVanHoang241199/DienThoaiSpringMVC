@@ -42,4 +42,13 @@ public class DienThoaiBo {
 	public int AddPhone(DienThoaiBean dtbean) throws Exception {
 		return dtDao.AddPhone(dtbean);
 	}
+	
+	public DienThoaiBean getDTBean(int maDT) throws Exception {
+		return dtDao.getDTBean(maDT);
+	}
+	
+	public boolean editPhome(int maDT, String tenDT, long gia, String anh, Long soLuong, String maLoai)
+			throws Exception {
+		return dtDao.editPhome(maDT, tenDT, gia, anh, soLuong, maLoai);
+	}
 }

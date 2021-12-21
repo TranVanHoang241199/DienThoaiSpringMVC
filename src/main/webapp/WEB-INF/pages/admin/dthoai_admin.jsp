@@ -111,7 +111,8 @@ span.input-group-addon i {
 										id="customFile">Choose file</label>
 								</div>
 							</div> -->
-
+							<br>
+							<br>
 							<br>
 							<button type="submit">Thêm Điện Thoại</button>
 
@@ -129,7 +130,7 @@ span.input-group-addon i {
 				<div class="row">
 					<br>
 					<c:forEach items="${dsDT }" var="h">
-						<div class="col-md-4">
+						<div class="col-md-4"><a href="editDienThoai?maSP=${h.getMaDT()}">
 							<br>
 							<div class="card">
 								<img class="card-img-top"
@@ -141,8 +142,9 @@ span.input-group-addon i {
 									<a href="AddThoaiAdmin?xoadt=${h.getMaDT()}"
 										class="btn btn-danger">Xóa DT</a>
 								</div>
-							</div>
+							</div></a>
 						</div>
+						
 					</c:forEach>
 				</div>
 			</div>

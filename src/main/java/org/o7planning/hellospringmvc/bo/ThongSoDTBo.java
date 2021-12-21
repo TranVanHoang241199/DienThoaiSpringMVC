@@ -29,4 +29,8 @@ public class ThongSoDTBo {
 	public boolean checkTSKT(int maDT) throws Exception {
 		return tsDao.checkTSKT(maDT);
 	}
+	
+	public boolean deleteTSKT(int maDT) throws Exception {
+		return tsDao.deleteTSKT(maDT);
+	}
 }
